@@ -188,12 +188,12 @@ def spec(
             xlim = (9, 1500)
     xmin, xmax = xlim
     ymin, ymax = (0.05, 7e2) if not pol else (1.001e-3, 2e2)
-    ymin2, ymax2 = (ymax + 100, 1e7)
+    ymin2, ymax2 = (ymax + 100, 1e8)
 
     figsize = get_figure_width(fraction=fraction) if figsize is None else figsize
 
     if extend:
-        ratio = 5  # Make subplot on top at 5:1 ratio
+        ratio = 4  # Make subplot on top at 5:1 ratio
         fig, (ax2, ax) = plt.subplots(
             2,
             1,
@@ -680,9 +680,11 @@ def spec(
         width=0.0,
     )
 
-    sax.set_ylabel(r"$\mathrm{RMS\ amplitude\ [}\mu\mathrm{K}_{\mathrm{RJ}}\mathrm{]}$", fontsize=labelsize, labelpad=0)
-    sax.set_xlabel(r"$\mathrm{Frequency\ [GHz]}$", fontsize=labelsize)
+    sax.set_ylabel("RMS amplitude (Rayleigh-Jeans) \\si{\\micro\\kelvin}", fontsize=labelsize, labelpad=0)
+    sax.set_xlabel("Frequency \\si{\\giga\\hertz}", fontsize=labelsize)
     plt.subplots_adjust(wspace=0.0, hspace=0.02)
+
+    return fig
 
 
 def rotate_label(x, y, pos, xrange, yrange, aspect_ratio):

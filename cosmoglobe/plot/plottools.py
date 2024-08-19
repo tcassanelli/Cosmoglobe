@@ -41,19 +41,19 @@ STOKES = [
 ]
 
 
-def set_style(darkmode=False, font="serif"):
+def set_style(darkmode=False, font="Computer Modern Sans Serif"):
     """
     This function sets the color parameter and text style
     """
-    if font == "serif":
+    if font == "Computer Modern Sans Serif":
         plt.rc(
             "font",
-            family="serif",
+            family="Computer Modern Sans Serif",
         )
         plt.rcParams["mathtext.fontset"] = "stix"
     plt.rc(
         "text.latex",
-        preamble=r"\usepackage{sfmath}",
+        preamble=r"\usepackage{sfmath} \usepackage[detect-weight=true, detect-family=true]{siunitx}",
     )
 
     tex_fonts = {
@@ -875,10 +875,10 @@ def create_70GHz_mask(sky_frac, nside=256, pol=False):
     # sky fraction for a range, and interpolate from this table.
     amp_percentages = np.flip(np.arange(1, 101))
     fracs = []
-    mask = np.zeros(len(template), dtype=np.bool)
+    mask = np.zeros(len(template), dtype=bool)
 
     for i in range(len(amp_percentages)):
-        mask = np.zeros(len(template), dtype=np.bool)
+        mask = np.zeros(len(template), dtype=bool)
         masked_template = np.abs(hp.ma(template))
         mask[np.where(np.log(masked_template) > (amp_percentages[i] / 100) * np.nanmax(np.log(masked_template)))] = 1
         masked_template.mask = mask
@@ -888,7 +888,7 @@ def create_70GHz_mask(sky_frac, nside=256, pol=False):
 
     amp_percentage = np.interp(100 - sky_frac, fracs, amp_percentages)
 
-    mask = np.zeros(len(template), dtype=np.bool)
+    mask = np.zeros(len(template), dtype=bool)
     masked_template = np.abs(hp.ma(template))
     mask[np.where(np.log(masked_template) > (amp_percentage / 100) * np.nanmax(np.log(masked_template)))] = 1
 
